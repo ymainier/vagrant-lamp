@@ -23,6 +23,8 @@
     Allow from all
   </Location>
 
+  php_flag xdebug.profiler_enable_trigger On
+
   LogLevel info
   ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-error.log
   CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>-access.log combined
