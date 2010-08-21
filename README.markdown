@@ -19,7 +19,7 @@ How
 
 That's it, the file in repo are served here : [http://www.dev-site.com:8080/](http://www.dev-site.com:8080/)
 
-You can add `XDEBUG_PROFILE` to your GET parameter to generate an xdebug trace, e.g. [http://www.dev-site.com:8080/](http://www.dev-site.com:8080/)
+You can add `XDEBUG_PROFILE` to your GET parameter to generate an xdebug trace, e.g. [http://www.dev-site.com:8080/?XDEBUG_PROFILE](http://www.dev-site.com:8080/?XDEBUG_PROFILE)
 
 You can then investigate at [http://localhost:8080/webgrind/](http://localhost:8080/webgrind/)
 
