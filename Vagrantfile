@@ -10,6 +10,7 @@ Vagrant::Config.run do |config|
   config.vm.provisioner = :chef_solo
 
   config.vm.forward_port("http", 80, 8080)
+  config.vm.forward_port("mysql", 3306, 3306)
 
   config.chef.json.merge!({
     :mysql => {
