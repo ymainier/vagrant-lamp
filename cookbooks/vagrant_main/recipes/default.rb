@@ -4,7 +4,7 @@ require_recipe "mysql::server"
 require_recipe "php::php5"
 
 # Some neat package (subversion is needed for "subversion" chef ressource)
-%w{ php5-xdebug subversion }.each do |a_package|
+%w{ php5-xdebug subversion phpmyadmin }.each do |a_package|
   package a_package do
     action :upgrade
   end
@@ -40,4 +40,16 @@ subversion "Webgrind" do
   revision "HEAD"
   destination "/var/www/webgrind"
   action :sync
+end
+
+# Add an admin user to mysql
+execute "add-admin-user" do
+  command "/usr/bin/mysql -u root -p#{node[:mysql][:server_root_password]} -e \"" +
+      "CREATE USER 'myadmin'@'localhost' IDENTIFIED BY 'myadmin';" +
+      "GRANT ALL PRIVILEGES ON *.* TO 'myadmin'@'localhost' WITH GRANT OPTION;" +
+      "CREATE USER 'myadmin'@'%' IDENTIFIED BY 'myadmin';" +
+      "GRANT ALL PRIVILEGES ON *.* TO 'myadmin'@'%' WITH GRANT OPTION;\" " +
+      "mysql"
+  # TODO : Use a If_not or un truc dans le speed 
+  action :run
 end
