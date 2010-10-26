@@ -6,8 +6,9 @@ Vagrant::Config.run do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "lucid32"
 
-  config.chef.cookbooks_path = "cookbooks"
   config.vm.provisioner = :chef_solo
+  config.chef.cookbooks_path = "cookbooks"
+  config.chef.add_recipe("vagrant_main")
 
   config.vm.forward_port("http", 80, 8080)
   config.vm.forward_port("mysql", 3306, 3306)
