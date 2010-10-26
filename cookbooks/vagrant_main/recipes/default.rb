@@ -4,11 +4,18 @@ require_recipe "mysql::server"
 require_recipe "php::php5"
 
 # Some neat package (subversion is needed for "subversion" chef ressource)
-%w{ php5-xdebug subversion phpmyadmin }.each do |a_package|
-  package a_package do
-    action :upgrade
-  end
+%w{ debconf php5-xdebug subversion  }.each do |a_package|
+  package a_package
 end
+
+# get phpmyadmin conf
+cookbook_file "/tmp/phpmyadmin.deb.conf" do
+  source "phpmyadmin.deb.conf"
+end
+bash "debconf_for_phpmyadmin" do
+  code "debconf-set-selections /tmp/phpmyadmin.deb.conf"
+end
+package "phpmyadmin"
 
 s = "dev-site"
 site = {
@@ -22,16 +29,12 @@ web_app site[:name] do
   template "sites.conf.erb"
   server_name site[:host]
   server_aliases site[:aliases]
-  docroot "/vagrant/"
+  docroot "/vagrant/public/"
 end  
 
 # Add site info in /etc/hosts
-template "/etc/hosts" do
-  source "hosts.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  variables(:hosts => [{:ip => "127.0.0.1", :names => [site[:host]] + site[:aliases] }])
+bash "info_in_etc_hosts" do
+  code "echo 127.0.0.1 #{site[:host]} #{site[:aliases]} >> /etc/hosts"
 end
 
 # Retrieve webgrind for xdebug trace analysis
@@ -50,6 +53,6 @@ execute "add-admin-user" do
       "CREATE USER 'myadmin'@'%' IDENTIFIED BY 'myadmin';" +
       "GRANT ALL PRIVILEGES ON *.* TO 'myadmin'@'%' WITH GRANT OPTION;\" " +
       "mysql"
-  # TODO : Use a If_not or un truc dans le speed 
   action :run
+  ignore_failure true
 end
