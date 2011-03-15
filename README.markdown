@@ -14,7 +14,7 @@ How
     cd [repo]
     vagrant init
     vagrant up
-6. Add this line to your /etc/hosts (or windows equivalent)
+6. Add this line to your `/etc/hosts` (or windows equivalent)
     127.0.0.1 www.dev-site.com dev-site.com dev.dev-site-static.com    
 
 That's it, the file in [repo]/public/ are served here : [http://www.dev-site.com:8080/](http://www.dev-site.com:8080/)
