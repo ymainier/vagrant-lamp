@@ -57,6 +57,12 @@ when "centos","redhat", "suse", "fedora"
   end
 
 else
+  b = package "build-essential" do
+    action :nothing
+  end
+
+  b.run_action(:install)
+
   r = gem_package "mysql" do
     action :nothing
   end
