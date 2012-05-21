@@ -15,7 +15,6 @@ How
 5. Go to the repo and launch the box
 
         cd [repo]
-        vagrant init
         vagrant up
 
 6. Add this line to your `/etc/hosts` (or windows equivalent)
