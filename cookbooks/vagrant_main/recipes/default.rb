@@ -1,7 +1,7 @@
-require_recipe "apt"
-require_recipe "apache2"
-require_recipe "mysql::server"
-require_recipe "php::php5"
+include_recipe "apt"
+include_recipe "apache2"
+include_recipe "mysql::server"
+include_recipe "php::php5"
 
 # Some neat package (subversion is needed for "subversion" chef ressource)
 %w{ debconf php5-xdebug subversion  }.each do |a_package|
