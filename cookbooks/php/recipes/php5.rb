@@ -46,3 +46,10 @@ packages.each do |pkg|
     action :upgrade
   end
 end
+
+template "/etc/php5/conf.d/xdebug_remote.ini" do
+  source "xdebug_remote.ini.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
