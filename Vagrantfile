@@ -1,3 +1,9 @@
+require 'socket'
+
+def my_first_private_ipv4
+  Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+end
+
 Vagrant::Config.run do |config|
   # All Vagrant configuration is done here. For a detailed explanation
   # and listing of configuration options, please view the documentation
@@ -13,6 +19,9 @@ Vagrant::Config.run do |config|
     chef.json.merge!({
     :mysql => {
       :server_root_password => "root"
+    },
+    :php => {
+      :virtualbox_host_ip => my_first_private_ipv4.ip_address
     }
   })
   end
